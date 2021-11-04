@@ -1,5 +1,6 @@
 import React from 'react';
-
+import './Game.css';
+import { v4 as uuidv4 } from 'uuid';
 
 //Game cointains the full tic-tac-toe game
 class Game extends React.Component{
@@ -23,16 +24,16 @@ class Game extends React.Component{
           };
         this.symbols=
           {
-              1:<i className="fa fa-times"></i>,
-              2:<i className="fa fa-circle"></i>,
-              3:<i className="fa fa-twitter"></i>,
-              4:<i className="fa fa-car"></i>,
-              5:<i className="fa fa-hashtag"></i>,
-              6:<i className="fa fa-square"></i>,
-              7:<i className="fa fa-apple"></i>,
-              8:<i className="fa fa-bolt"></i>,
-              9:<i className="fa fa-fire"></i>,
-              10:<i className="fa fa-star"></i>
+              1:<i key={uuidv4()} className="fa fa-times"></i>,
+              2:<i key={uuidv4()} className="fa fa-circle"></i>,
+              3:<i key={uuidv4()} className="fa fa-twitter"></i>,
+              4:<i key={uuidv4()} className="fa fa-car"></i>,
+              5:<i key={uuidv4()} className="fa fa-hashtag"></i>,
+              6:<i key={uuidv4()} className="fa fa-square"></i>,
+              7:<i key={uuidv4()} className="fa fa-apple"></i>,
+              8:<i key={uuidv4()} className="fa fa-bolt"></i>,
+              9:<i key={uuidv4()} className="fa fa-fire"></i>,
+              10:<i key={uuidv4()} className="fa fa-star"></i>
           }
     }
 
@@ -91,7 +92,7 @@ class Game extends React.Component{
     }
 
     symbolClick(i,name){
-        i=i+1;
+        i++;
         if (this.state.player1Symbol ===i || this.state.player2Symbol ===i){
             return;
         }
@@ -113,8 +114,6 @@ class Game extends React.Component{
         });
         let winState = checkWin(currSquares);
         let currPlayer=((step% 2) === 0?this.state.startPlayer:(this.state.startPlayer===1?2:1));
-        console.log("step" + step);
-        console.log("h length" + this.state.history.length);
         if (step===this.state.history.length-1 && winState){
             currPlayer=(currPlayer===1?2:1)
         }
@@ -170,7 +169,7 @@ class Game extends React.Component{
               </li>
             );
           });
-
+        
         const symbol1=Object.values(this.symbols).slice();
         const symbol2=Object.values(this.symbols).slice(); 
         symbol1[this.state.player2Symbol-1]=" ";
@@ -185,14 +184,14 @@ class Game extends React.Component{
             <br></br>
           <Grid 
             squares={currSquares}
-            onClick= {(i,j) => this.gameClick(i,j)}
+            onClick={(i,j) => this.gameClick(i,j)}
             />
             <br></br>
             <h3>Player 1 Symbol: {this.symbols[this.state.player1Symbol]} </h3>
             <Grid 
                 name={1}
                 squares={symbol1}
-                onClick= {(i,name) => this.symbolClick(i,name)}
+                onClick={(i,name) => this.symbolClick(i,name)}
             />
             <br></br>
             <br></br>
@@ -201,7 +200,7 @@ class Game extends React.Component{
             <Grid 
                 name={2}
                 squares={symbol2}
-                onClick= {(i,name) => this.symbolClick(i,name)}
+                onClick={(i,name) => this.symbolClick(i,name)}
             />
         </div>
             <div className="game-info column">
@@ -224,19 +223,19 @@ class Grid extends React.Component{
         const items=[]
         this.props.squares.forEach((e1,i1)=>{
             if (e1.length<=1 || !e1.length){
-                items.push(<Square
+                items.push(<Square key={uuidv4()}
                     value={e1}
                     onClick={() => this.props.onClick(i1,this.props.name)}
                 />)
             }else{
                 const rowItems=[]
                 e1.forEach((e2,i2) => {
-                    rowItems.push(<Square
+                    rowItems.push(<Square key={uuidv4()}
                         value={e2}
                         onClick={() => this.props.onClick(i1,i2,this.props.name)}
                     />)
                 });
-                items.push(<div className="gridRow">{rowItems}</div>)
+                items.push(<div key={uuidv4()} className="gridRow">{rowItems}</div>)
             }
             
         })
@@ -246,7 +245,7 @@ class Grid extends React.Component{
 
     render(){
         return(
-            <div>
+            <div key={"square"}>
                 {this.renderSquare()}
             </div>
         );
