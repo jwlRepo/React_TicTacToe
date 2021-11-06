@@ -1,6 +1,5 @@
 import React from 'react';
 import './Game.css';
-import { v4 as uuidv4 } from 'uuid';
 
 //Game cointains the full tic-tac-toe game
 class Game extends React.Component{
@@ -24,16 +23,16 @@ class Game extends React.Component{
           };
         this.symbols=
           {
-              1:<i key={uuidv4()} className="fa fa-times"></i>,
-              2:<i key={uuidv4()} className="fa fa-circle"></i>,
-              3:<i key={uuidv4()} className="fa fa-twitter"></i>,
-              4:<i key={uuidv4()} className="fa fa-car"></i>,
-              5:<i key={uuidv4()} className="fa fa-hashtag"></i>,
-              6:<i key={uuidv4()} className="fa fa-square"></i>,
-              7:<i key={uuidv4()} className="fa fa-apple"></i>,
-              8:<i key={uuidv4()} className="fa fa-bolt"></i>,
-              9:<i key={uuidv4()} className="fa fa-fire"></i>,
-              10:<i key={uuidv4()} className="fa fa-star"></i>
+              1:<i key={"time"} className="fa fa-times"></i>,
+              2:<i key={"circle"} className="fa fa-circle"></i>,
+              3:<i key={"twitter"} className="fa fa-twitter"></i>,
+              4:<i key={"car"} className="fa fa-car"></i>,
+              5:<i key={"hashtag"} className="fa fa-hashtag"></i>,
+              6:<i key={"square_symbol"} className="fa fa-square"></i>,
+              7:<i key={"apple"} className="fa fa-apple"></i>,
+              8:<i key={"bolt"} className="fa fa-bolt"></i>,
+              9:<i key={"fire"} className="fa fa-fire"></i>,
+              10:<i key={"star"} className="fa fa-star"></i>
           }
     }
 
@@ -183,6 +182,7 @@ class Game extends React.Component{
             <br></br>
             <br></br>
           <Grid 
+            name={"board"}
             squares={currSquares}
             onClick={(i,j) => this.gameClick(i,j)}
             />
@@ -223,19 +223,19 @@ class Grid extends React.Component{
         const items=[]
         this.props.squares.forEach((e1,i1)=>{
             if (e1.length<=1 || !e1.length){
-                items.push(<Square key={uuidv4()}
+                items.push(<Square key={this.props.name + i1 + "_square"}
                     value={e1}
                     onClick={() => this.props.onClick(i1,this.props.name)}
                 />)
             }else{
                 const rowItems=[]
                 e1.forEach((e2,i2) => {
-                    rowItems.push(<Square key={uuidv4()}
+                    rowItems.push(<Square key={this.props.name + "_" + i1 + "_" +i2}
                         value={e2}
                         onClick={() => this.props.onClick(i1,i2,this.props.name)}
                     />)
                 });
-                items.push(<div key={uuidv4()} className="gridRow">{rowItems}</div>)
+                items.push(<div key={this.props.name + i1 +"_Grid"} className="gridRow">{rowItems}</div>)
             }
             
         })
